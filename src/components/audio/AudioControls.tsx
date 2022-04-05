@@ -1,8 +1,10 @@
 import React from 'react';
-import { ReactComponent as Play } from './assets/play.svg';
-import { ReactComponent as Pause } from './assets/pause.svg';
-import { ReactComponent as Next } from './assets/next.svg';
-import { ReactComponent as Prev } from './assets/prev.svg';
+import {
+  StepBackwardFilled,
+  StepForwardFilled,
+  PlayCircleFilled,
+  PauseCircleFilled
+} from '@ant-design/icons';
 
 interface AudioControlsProps {
   isPlaying: boolean,
@@ -18,14 +20,14 @@ const AudioControls: React.FC<AudioControlsProps> = ({
   onNextClick
 }) => {
   return (
-    <div className="audio-controls">
+    <div className="audio_controls">
       <button
         type="button"
         className="prev"
         aria-label="Previous"
         onClick={onPrevClick}
       >
-        <Prev />
+        <StepBackwardFilled style={{ fontSize: '24px' }} />
       </button>
       {isPlaying ? (
         <button
@@ -34,7 +36,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
           onClick={() => onPlayPauseClick(false)}
           aria-label="Pause"
         >
-          <Pause />
+          <PauseCircleFilled style={{ fontSize: '34px' }} />
         </button>
       ) : (
         <button
@@ -43,7 +45,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
           onClick={() => onPlayPauseClick(true)}
           aria-label="Play"
         >
-          <Play />
+          <PlayCircleFilled style={{ fontSize: '34px' }} />
         </button>
       )}
       <button
@@ -52,7 +54,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         aria-label="Next"
         onClick={onNextClick}
       >
-        <Next />
+        <StepForwardFilled style={{ fontSize: '24px' }} />
       </button>
     </div>
   )

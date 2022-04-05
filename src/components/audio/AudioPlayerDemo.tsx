@@ -1,6 +1,7 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react";
 import AudioControls from './AudioControls';
-import './style.less'
+import Backdrop from "./Backdrop";
+import './style.css'
 
 interface track {
   title: string,
@@ -35,7 +36,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
     ? `${(trackProgress / duration) * 100}%`
     : "0%";
   const trackStyling = `
-    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #c4463a), color-stop(${currentPercentage}, #fff))
+    -webkit-gradient(linear, 0% 0%, 100% 0%, color-stop(${currentPercentage}, #fff), color-stop(${currentPercentage}, #777))
   `;
 
   const toPrevTrack = () => {
@@ -120,15 +121,22 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
   }
 
   return (
-    <div className="audio_player">
-      <div className="audio_bar">
+    <div className="audio-player">
+      <div className="track-info">
+        <img
+          className="artwork"
+          src={image}
+          alt={`track artwork for ${title} by ${artist}`}
+        />
+        <h2>{title}</h2>
+        <h3>{artist}</h3>
+
         <AudioControls
           isPlaying={isPlaying}
           onPrevClick={toPrevTrack}
           onNextClick={toNextTrack}
           onPlayPauseClick={setIsPlaying}
-        >
-        </AudioControls>
+        />
 
         <input
           type="range"
@@ -136,15 +144,21 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
           step="1"
           min="0"
           max={duration ? duration : `${duration}`}
-          className="audio_progress"
+          className="progress"
           onChange={(e) => onScrub(e.target.value)}
           onMouseUp={onScrubEnd}
           onKeyUp={onScrubEnd}
           style={{ background: trackStyling }}
         />
       </div>
+
+      <Backdrop
+        trackIndex={trackIndex}
+        activeColor={color}
+        isPlaying={isPlaying}
+      />
     </div>
-  )
+  );
 }
 
-export default AudioPlayer
+export default AudioPlayer;
