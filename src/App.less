@@ -1,1 +1,48 @@
 @import '~antd/dist/antd.less';
+
+.App {
+  display: flex;
+}
+
+.audio_menu {
+  flex: 0 0 auto;
+  width: 200px;
+  height: calc(~"100vh - 60px");
+  background-color: #ededed;
+  .menu_avatar {
+    margin: 5px 10px;
+    display: flex;
+    align-items: center;
+    .avatar {
+      flex: 0 0 auto;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .username {
+      margin-left: 10px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      font-size: 16px;
+    }
+  }
+  .menu_list {
+    margin: 10px 0;
+    .list_item {
+      height: 40px;
+      padding-left: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      cursor: default;
+      .text {
+        margin-left: 10px;
+      }
+      &:hover {
+        background-color: #e6e6e6;
+      }
+    }
+  }
+}

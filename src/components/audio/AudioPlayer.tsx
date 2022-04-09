@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import AudioControls from './AudioControls';
+import AudioProfile from './AudioProfile';
 import './style.less'
 
 interface track {
@@ -29,7 +30,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
   const isReady = useRef(false);
 
   // Destructure for conciseness
-  const { duration } = audioRef.current;
+  const { duration, currentTime } = audioRef.current;
 
   const currentPercentage = duration
     ? `${(trackProgress / duration) * 100}%`
@@ -90,8 +91,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
   useEffect(() => {
     audioRef.current.pause();
 
-    audioRef.current = new Audio(audioSrc);
-    // audioRef.current.src = audioSrc;
+    // audioRef.current = new Audio(audioSrc);
+    audioRef.current.src = audioSrc;
     setTrackProgress(audioRef.current.currentTime);
 
     if (isReady.current) {
@@ -122,6 +123,16 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
   return (
     <div className="audio_player">
       <div className="audio_bar">
+        <AudioProfile 
+          title={title}
+          artist={artist}
+          image={image}
+          color={color}
+          duration={duration}
+          currentTime={currentTime}
+        >
+        </AudioProfile>
+
         <AudioControls
           isPlaying={isPlaying}
           onPrevClick={toPrevTrack}
@@ -129,6 +140,8 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
           onPlayPauseClick={setIsPlaying}
         >
         </AudioControls>
+
+        <div className="right_wrapper"></div>
 
         <input
           type="range"
