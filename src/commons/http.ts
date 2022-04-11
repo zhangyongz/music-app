@@ -7,13 +7,15 @@ instance.defaults.withCredentials = true
 
 instance.defaults.baseURL = 'http://localhost:3002'
 
+const sucessCode = [200, 801, 802, 803]
+
 instance.interceptors.response.use((res) => {
-  if (res.data.code !== 200) {
+  if (sucessCode.indexOf(res.data.code) === -1) {
     if (res.config.toastShow !== 0) {
       message.warning(res.data.message)
     }
   }
-  return Promise.resolve(res)
+  return Promise.resolve(res.data)
 }, (error) => {
   if (error.config.toastShow !== 0) {
     const { response } = error
@@ -25,7 +27,6 @@ instance.interceptors.response.use((res) => {
       message.warning('网络连接失败，请检查网络')
     }
   }
-  console.log(error.message)
   return Promise.resolve(error)
 })
 

@@ -11,26 +11,52 @@ import { Spin, Modal } from 'antd'
 
 // import avatar from './assets/images/wallhaven-y8wdlx.jpeg'
 
-import { qrKey, qrCreate } from '@/commons/api'
+import { qrKey, qrCreate, qrCheck, userAccount } from '@/commons/api'
 import { LoadingContext } from '@/commons/context'
 
 const AudioMenu: React.FC = () => {
   const loadingContext = useContext(LoadingContext)
   const [qrShow, setQrShow] = useState(false)
   const [qrImg, setQrImg] = useState('')
+  const [timer, setTimer] = useState<undefined | number>()
 
-  async function loginHandle () {
+  function startQrCheck(key: string) {
+    let timer = window.setTimeout(async () => {
+      const { code } = await qrCheck({
+        key
+      })
+      if (code === 803) {
+        loadingContext.toggleLoading(true)
+        setQrShow(false)
+        const { code, data } = await userAccount()
+        loadingContext.toggleLoading(false)
+        if (code === 200) {
+          console.log(data)
+        }
+      } else if (code === 801 || code === 802) {
+        startQrCheck(key)
+      }
+    }, 3000)
+    setTimer(timer)
+  }
+
+  function afterCloseModelHandle() {
+    window.clearTimeout(timer)
+  }
+
+  async function loginHandle() {
     loadingContext.toggleLoading(true)
     const res = await qrKey()
-    if (res.data.code === 200) {
+    if (res.code === 200) {
       const res2 = await qrCreate({
         key: res.data.unikey,
         qrimg: '1'
       })
       loadingContext.toggleLoading(false)
-      if (res2.data.code === 200) {
+      if (res2.code === 200) {
         setQrShow(true)
-        setQrImg(res2.data.data.qrimg)
+        setQrImg(res2.data.qrimg)
+        startQrCheck(res.data.unikey)
       }
     } else {
       loadingContext.toggleLoading(false)
@@ -40,7 +66,7 @@ const AudioMenu: React.FC = () => {
   return (
     <div className='audio_menu'>
       <div className='menu_avatar' onClick={loginHandle}>
-        <UserOutlined style={{fontSize: '30px'}} />
+        <UserOutlined style={{ fontSize: '30px' }} />
         {/* <img src={avatar} alt='avatar' className='avatar'  /> */}
         <p className='username'>未登录</p>
       </div>
@@ -52,8 +78,8 @@ const AudioMenu: React.FC = () => {
       </ul>
 
       <Modal title="网易云扫描二维码登录" visible={qrShow} footer={null}
-        transitionName="" maskTransitionName=""
-        onCancel={() => {setQrShow(false)}}>
+        transitionName="" maskTransitionName="" afterClose={afterCloseModelHandle}
+        onCancel={() => { setQrShow(false) }}>
         <img src={qrImg} className="qr_img" />
       </Modal>
     </div>
@@ -62,7 +88,7 @@ const AudioMenu: React.FC = () => {
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  
+
   const loadingContextValue = {
     toggleLoading: (val: boolean) => {
       setLoading(val)
