@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import {
   BarsOutlined,
   UserOutlined
@@ -25,6 +25,7 @@ const AudioMenu: React.FC = () => {
   const [timer, setTimer] = useState<undefined | number>()
 
   const profile = useAppSelector(selectProfile)
+  let navigate = useNavigate()
 
   function startQrCheck(key: string) {
     let timer = window.setTimeout(async () => {
@@ -69,6 +70,10 @@ const AudioMenu: React.FC = () => {
     }
   }
 
+  function goRecordHandle () {
+    navigate('/record')
+  }
+
   return (
     <div className='audio_menu'>
       {
@@ -84,7 +89,7 @@ const AudioMenu: React.FC = () => {
           </div>
       }
       <ul className='menu_list'>
-        <li className='list_item'>
+        <li className='list_item' onClick={goRecordHandle}>
           <BarsOutlined style={{ fontSize: '20px' }} />
           <span className='text'>正在播放</span>
         </li>
@@ -129,15 +134,17 @@ const App: React.FC = () => {
         <div className="App">
           <AudioMenu></AudioMenu>
           <AudioPlayer tracks={tracks}></AudioPlayer>
-          <nav
+          {/* <nav
             style={{
               paddingBottom: "1rem",
             }}
           >
             <Link to="/invoices">Invoices</Link> |{" "}
             <Link to="/expenses">Expenses</Link>
-          </nav>
-          <Outlet />
+          </nav> */}
+          <div>
+            <Outlet />
+          </div>
         </div>
       </Spin>
     </LoadingContext.Provider>

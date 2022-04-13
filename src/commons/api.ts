@@ -1,11 +1,7 @@
 // import { AxiosResponse } from 'axios'
 import http from '@/commons/http'
 
-interface res {
-  code?: number,
-  data?: any,
-  profile?: any
-}
+type res = any
 
 export function qrKey(): Promise<res> {
   return http.get('/login/qr/key')
@@ -44,6 +40,17 @@ interface userDetailParams {
 // 获取用户详情
 export function userDetail(params: userDetailParams): Promise<res> {
   return http.get('/user/detail', {
+    params
+  })
+}
+
+interface userRecordParams {
+  uid: string,
+  type?: string
+}
+
+export function userRecord(params: userRecordParams): Promise<res> {
+  return http.get('/user/record', {
     params
   })
 }

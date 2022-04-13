@@ -4,7 +4,6 @@ import type { RootState } from '@/store'
 export const usersSlice = createSlice({
   name: 'users',
   initialState: {
-    account: {},
     profile: {}
   },
   reducers: {
@@ -18,5 +17,6 @@ export const usersSlice = createSlice({
 export const { setProfile } = usersSlice.actions
 
 export const selectProfile = (state: RootState) => state.users.profile
+export const selectUid = (state: RootState) => state.users.profile.userId
 
 export default usersSlice.reducer

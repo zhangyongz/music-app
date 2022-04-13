@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
-import AudioControls from './AudioControls';
-import AudioProfile from './AudioProfile';
+import AudioControls from './AudioControls'
+import AudioProfile from './AudioProfile'
 import './style.less'
 
 interface track {

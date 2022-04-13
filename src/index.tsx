@@ -13,6 +13,7 @@ import {
 
 import Expenses from './views/expenses';
 import Invoices from './views/invoices';
+import Record from './views/record/Record';
 
 // ReactDOM
 //   .createRoot(document.getElementById('root'))
@@ -30,6 +31,7 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route path="expenses" element={<Expenses />} />
             <Route path="invoices" element={<Invoices />} />
+            <Route path="record" element={<Record />} />
           </Route>
         </Routes>
       </BrowserRouter>
