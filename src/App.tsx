@@ -1,7 +1,4 @@
-import React, { useContext, useState } from 'react';
-import './App.less';
-import AudioPlayer from "./components/audio/AudioPlayer";
-import tracks from "./components/audio/tracks";
+import React, { useContext, useState, useEffect } from 'react';
 import { Outlet, Link } from "react-router-dom";
 import {
   BarsOutlined,
@@ -9,16 +6,25 @@ import {
 } from '@ant-design/icons';
 import { Spin, Modal } from 'antd'
 
+import './App.less';
+import AudioPlayer from "./components/audio/AudioPlayer";
+import tracks from "./components/audio/tracks";
+
 // import avatar from './assets/images/wallhaven-y8wdlx.jpeg'
 
-import { qrKey, qrCreate, qrCheck, userAccount } from '@/commons/api'
+import { qrKey, qrCreate, qrCheck, userAccount, userDetail } from '@/commons/api'
 import { LoadingContext } from '@/commons/context'
+
+import { useAppSelector, useAppDispatch } from '@/store/hooks'
+import { setProfile, selectProfile } from './store/features/users/usersSlice'
 
 const AudioMenu: React.FC = () => {
   const loadingContext = useContext(LoadingContext)
   const [qrShow, setQrShow] = useState(false)
   const [qrImg, setQrImg] = useState('')
   const [timer, setTimer] = useState<undefined | number>()
+
+  const profile = useAppSelector(selectProfile)
 
   function startQrCheck(key: string) {
     let timer = window.setTimeout(async () => {
@@ -65,11 +71,18 @@ const AudioMenu: React.FC = () => {
 
   return (
     <div className='audio_menu'>
-      <div className='menu_avatar' onClick={loginHandle}>
-        <UserOutlined style={{ fontSize: '30px' }} />
-        {/* <img src={avatar} alt='avatar' className='avatar'  /> */}
-        <p className='username'>未登录</p>
-      </div>
+      {
+        profile.avatarUrl ?
+          <div className='menu_avatar'>
+            <img src={profile.avatarUrl} alt='avatar' className='avatar' />
+            <p className='username'>{profile.nickname}</p>
+          </div>
+          :
+          <div className='menu_avatar' onClick={loginHandle}>
+            <UserOutlined style={{ fontSize: '30px' }} />
+            <p className='username'>未登录</p>
+          </div>
+      }
       <ul className='menu_list'>
         <li className='list_item'>
           <BarsOutlined style={{ fontSize: '20px' }} />
@@ -88,12 +101,27 @@ const AudioMenu: React.FC = () => {
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch()
 
   const loadingContextValue = {
     toggleLoading: (val: boolean) => {
       setLoading(val)
     }
   }
+
+  async function getUserDetail() {
+    const res = await userDetail({
+      uid: '99339350'
+    })
+    if (res.code === 200) {
+      // console.log(res);
+      dispatch(setProfile(res.profile))
+    }
+  }
+
+  useEffect(() => {
+    getUserDetail()
+  }, [])
 
   return (
     <LoadingContext.Provider value={loadingContextValue}>
