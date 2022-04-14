@@ -3,22 +3,21 @@ import { Affix } from 'antd';
 
 import './list.less'
 import { formatMilliSecond } from '@/commons/utils'
-
-interface listItem {
-  song: {
-    id: number,
-    name: string,
-    ar: [{ name: string }],
-    al: { name: string },
-    dt: number
-  }
-}
+import { useAppDispatch } from '@/store/hooks'
+import { setTracks } from '@/store/features/users/usersSlice'
+import type { track } from '@/types'
 
 interface ListProps {
-  data: listItem[]
+  data: track[]
 }
 
 const List: React.FC<ListProps> = (props) => {
+  const dispatch = useAppDispatch()
+
+  function clickItemHandle(item: track) {
+    dispatch(setTracks([item]))
+  }
+
   return (
     <div className='list_box'>
       <ul>
@@ -32,7 +31,8 @@ const List: React.FC<ListProps> = (props) => {
         </Affix>
         {
           props.data.map((item) => {
-            return (<li key={item.song.id} className="list_item">
+            return (<li key={item.song.id} className="list_item"
+              onClick={() => {clickItemHandle(item)}}>
               <span className='name'>{item.song.name}</span>
               <span className='ar'>{item.song.ar.map((item, index) => {
                 let symbol = index === 0 ? '' : ' / '

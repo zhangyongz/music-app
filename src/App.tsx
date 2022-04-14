@@ -8,7 +8,7 @@ import { Spin, Modal } from 'antd'
 
 import './App.less'
 import AudioPlayer from "./components/audio/AudioPlayer"
-import tracks from "./components/audio/tracks"
+// import tracks from "./components/audio/tracks"
 
 // import avatar from './assets/images/wallhaven-y8wdlx.jpeg'
 
@@ -16,7 +16,7 @@ import { qrKey, qrCreate, qrCheck, userAccount, userDetail } from '@/commons/api
 import { LoadingContext } from '@/commons/context'
 
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { setProfile, selectProfile } from './store/features/users/usersSlice'
+import { setProfile, selectProfile } from '@/store/features/users/usersSlice'
 
 const AudioMenu: React.FC = () => {
   const loadingContext = useContext(LoadingContext)
@@ -133,7 +133,7 @@ const App: React.FC = () => {
       <Spin spinning={loading}>
         <div className="App">
           <AudioMenu></AudioMenu>
-          <AudioPlayer tracks={tracks}></AudioPlayer>
+          <AudioPlayer></AudioPlayer>
           {/* <nav
             style={{
               paddingBottom: "1rem",

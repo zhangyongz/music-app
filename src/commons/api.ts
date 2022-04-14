@@ -54,3 +54,15 @@ export function userRecord(params: userRecordParams): Promise<res> {
     params
   })
 }
+
+interface songUrlParams {
+  id: string,
+  br?: string
+}
+
+export function songUrl(params: songUrlParams): Promise<res> {
+  return http.get('/song/url', {
+    params
+  })
+}
+

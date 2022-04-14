@@ -1,31 +1,42 @@
 import React, { useState, useRef, useEffect } from "react"
+import { useAppSelector } from '@/store/hooks'
+
 import AudioControls from './AudioControls'
 import AudioProfile from './AudioProfile'
 import './style.less'
+import type { artist } from '@/types'
+import { selectTracks } from '@/store/features/users/usersSlice'
+import { audioSrcPrefix } from '@/commons/const'
 
-interface track {
-  title: string,
-  artist: string,
-  audioSrc: string,
-  image: string,
-  color: string
-}
-
-interface AudioPlayerProps {
-  tracks: track[]
-}
-
-const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
+const AudioPlayer: React.FC = () => {
   // State
   const [trackIndex, setTrackIndex] = useState(0);
   const [trackProgress, setTrackProgress] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const tracks = useAppSelector(selectTracks)
+  // console.log(tracks);
 
   // Destructure for conciseness
-  const { title, artist, color, image, audioSrc } = tracks[trackIndex];
+  // let title = ''
+  // let artist = ''
+  // let color = ''
+  // let image = ''
+  // let audioSrc = ''
+  // let audioRef = useRef(new Audio(audioSrc));
 
+  // if (tracks[trackIndex]) {
+  const song = tracks[trackIndex]?.song || {};
+  const title = song.name
+  const artist = song.ar?.map((item: artist) => {
+    return item.name
+  }).join(',')
+  const color = ''
+  const image = song.al?.picUrl
+  const audioSrc = audioSrcPrefix + song.id + '.mp3'
   // Refs
   const audioRef = useRef(new Audio(audioSrc));
+  // }
+
   const intervalRef = useRef<undefined | number>();
   const isReady = useRef(false);
 
@@ -103,7 +114,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
       // Set the isReady ref as true for the next pass
       isReady.current = true;
     }
-  }, [trackIndex]);
+  }, [trackIndex, tracks]);
 
   const onScrub = (value: string) => {
     // Clear any timers already running
@@ -123,7 +134,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
   return (
     <div className="audio_player">
       <div className="audio_bar">
-        <AudioProfile 
+        <AudioProfile
           title={title}
           artist={artist}
           image={image}
