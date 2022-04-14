@@ -1,14 +1,14 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { Outlet, useNavigate } from "react-router-dom";
+import React, { useContext, useState, useEffect } from 'react'
+import { Outlet, useNavigate } from "react-router-dom"
 import {
   BarsOutlined,
   UserOutlined
-} from '@ant-design/icons';
+} from '@ant-design/icons'
 import { Spin, Modal } from 'antd'
 
-import './App.less';
-import AudioPlayer from "./components/audio/AudioPlayer";
-import tracks from "./components/audio/tracks";
+import './App.less'
+import AudioPlayer from "./components/audio/AudioPlayer"
+import tracks from "./components/audio/tracks"
 
 // import avatar from './assets/images/wallhaven-y8wdlx.jpeg'
 
@@ -142,7 +142,7 @@ const App: React.FC = () => {
             <Link to="/invoices">Invoices</Link> |{" "}
             <Link to="/expenses">Expenses</Link>
           </nav> */}
-          <div>
+          <div className='container'>
             <Outlet />
           </div>
         </div>

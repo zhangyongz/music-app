@@ -1,9 +1,5 @@
 import React from 'react'
-import dayjs from 'dayjs'
-import duration from 'dayjs/plugin/duration'
-import relativeTime from 'dayjs/plugin/relativeTime'
-dayjs.extend(duration)
-dayjs.extend(relativeTime)
+import { formatSecond } from '@/commons/utils'
 
 interface AudioProfileProps {
   title: string,
@@ -12,13 +8,6 @@ interface AudioProfileProps {
   color: string,
   duration: number,
   currentTime: number
-}
-
-function formatSecond(second: number) {
-  if (isNaN(second)) {
-    return '00:00'
-  }
-  return dayjs.duration(second, "second").format('mm:ss')
 }
 
 const AudioProfile: React.FC<AudioProfileProps> = (props) => {

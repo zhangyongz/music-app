@@ -6,57 +6,68 @@
   display: flex;
   padding-left: 200px;
   padding-bottom: 60px;
-}
 
-.audio_menu {
-  flex: 0 0 auto;
-  width: 200px;
-  height: calc(~"100vh - 60px");
-  background-color: #ededed;
-  position: fixed;
-  left: 0;
-  top: 0;
-  z-index: 5;
-  .menu_avatar {
-    margin: 5px 10px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    .avatar {
-      flex: 0 0 auto;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .username {
-      margin-left: 10px;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      font-size: 14px;
-    }
-  }
-  .menu_list {
-    margin: 10px 0;
-    .list_item {
-      height: 40px;
-      padding-left: 20px;
-      font-size: 14px;
+  .audio_menu {
+    flex: 0 0 auto;
+    width: 200px;
+    height: calc(~"100vh - 60px");
+    background-color: #ededed;
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 5;
+
+    .menu_avatar {
+      margin: 5px 10px;
       display: flex;
       align-items: center;
-      cursor: default;
-      .text {
-        margin-left: 10px;
+      cursor: pointer;
+
+      .avatar {
+        flex: 0 0 auto;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        object-fit: cover;
       }
-      &:hover {
-        background-color: #e6e6e6;
+
+      .username {
+        margin-left: 10px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        font-size: 14px;
+      }
+    }
+
+    .menu_list {
+      margin: 10px 0;
+
+      .list_item {
+        height: 40px;
+        padding-left: 20px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        cursor: default;
+
+        .text {
+          margin-left: 10px;
+        }
+
+        &:hover {
+          background-color: #e6e6e6;
+        }
       }
     }
   }
-}
 
-.qr_img {
-  margin: 0 auto;
-  display: block;
+  .qr_img {
+    margin: 0 auto;
+    display: block;
+  }
+
+  .container {
+    flex: 1;
+  }
 }

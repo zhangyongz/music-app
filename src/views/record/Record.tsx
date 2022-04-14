@@ -4,6 +4,7 @@ import { useAppSelector } from '@/store/hooks'
 import { userRecord } from '@/commons/api'
 import { selectUid } from '@/store/features/users/usersSlice'
 import List from '@/components/list/List'
+import './record.less'
 
 const Record: React.FC = () => {
   const uid = useAppSelector(selectUid)
@@ -27,7 +28,10 @@ const Record: React.FC = () => {
   }, [uid])
 
   return (
-    <List data={listData}></List>
+    <div className='record_box'>
+      <p className='total_text'>共{ listData.length }首</p>
+      <List data={listData}></List>
+    </div>
   )
 }
 
