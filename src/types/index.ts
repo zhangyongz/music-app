@@ -11,3 +11,10 @@ export interface track {
     dt: number
   }
 }
+
+interface playListItemInterface {
+  coverImgUrl: string,
+  name: string
+}
+
+export type playListType = playListItemInterface[]

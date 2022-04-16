@@ -33,12 +33,12 @@ export function userAccount(): Promise<res> {
   return http.get('/user/account')
 }
 
-interface userDetailParams {
+interface userIdParams {
   uid: string
 }
 
 // 获取用户详情
-export function userDetail(params: userDetailParams): Promise<res> {
+export function userDetail(params: userIdParams): Promise<res> {
   return http.get('/user/detail', {
     params
   })
@@ -65,4 +65,16 @@ export function songUrl(params: songUrlParams): Promise<res> {
     params
   })
 }
+
+interface userPlaylistParams extends userIdParams {
+  limit?: string
+}
+
+// 获取用户歌单
+export function userPlaylist(params: userPlaylistParams): Promise<res> {
+  return http.get('/user/playlist', {
+    params
+  })
+}
+
 

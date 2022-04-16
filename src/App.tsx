@@ -1,8 +1,9 @@
 import React, { useContext, useState, useEffect } from 'react'
 import { Outlet, useNavigate } from "react-router-dom"
 import {
-  BarsOutlined,
-  UserOutlined
+  ClockCircleOutlined,
+  UserOutlined,
+  CustomerServiceOutlined
 } from '@ant-design/icons'
 import { Spin, Modal } from 'antd'
 
@@ -70,8 +71,12 @@ const AudioMenu: React.FC = () => {
     }
   }
 
-  function goRecordHandle () {
+  function goRecordHandle() {
     navigate('/record')
+  }
+
+  function goCollectionHandle() {
+    navigate('/collection')
   }
 
   return (
@@ -90,8 +95,12 @@ const AudioMenu: React.FC = () => {
       }
       <ul className='menu_list'>
         <li className='list_item' onClick={goRecordHandle}>
-          <BarsOutlined style={{ fontSize: '20px' }} />
-          <span className='text'>正在播放</span>
+          <ClockCircleOutlined style={{ fontSize: '20px' }} />
+          <span className='text'>最近播放</span>
+        </li>
+        <li className='list_item' onClick={goCollectionHandle}>
+          <CustomerServiceOutlined style={{ fontSize: '20px' }} />
+          <span className='text'>我的歌单</span>
         </li>
       </ul>
 

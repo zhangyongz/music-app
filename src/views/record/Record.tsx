@@ -23,7 +23,7 @@ const Record: React.FC = () => {
       type: '1'
     })
     if (code === 200) {
-      console.log(weekData);
+      // console.log(weekData);
       setListData(weekData)
     }
   }

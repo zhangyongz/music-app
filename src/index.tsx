@@ -11,9 +11,8 @@ import {
   Route,
 } from "react-router-dom";
 
-import Expenses from './views/expenses';
-import Invoices from './views/invoices';
-import Record from './views/record/Record';
+import Record from './views/record/Record'
+import Collection from './views/collection/Collection'
 
 // ReactDOM
 //   .createRoot(document.getElementById('root'))
@@ -29,9 +28,8 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<App />}>
-            <Route path="expenses" element={<Expenses />} />
-            <Route path="invoices" element={<Invoices />} />
             <Route path="record" element={<Record />} />
+            <Route path="collection" element={<Collection />} />
           </Route>
         </Routes>
       </BrowserRouter>
