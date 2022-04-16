@@ -3,16 +3,17 @@ export interface artist {
 }
 
 export interface track {
-  song: {
-    id: number,
-    name: string,
-    ar: artist[],
-    al: { name: string },
-    dt: number
-  }
+  // song: {
+  id: number,
+  name: string,
+  ar: artist[],
+  al: { name: string },
+  dt: number
+  // }
 }
 
-interface playListItemInterface {
+export interface playListItemInterface {
+  id: number,
   coverImgUrl: string,
   name: string
 }

@@ -77,4 +77,16 @@ export function userPlaylist(params: userPlaylistParams): Promise<res> {
   })
 }
 
+interface playlistDetailParams {
+  id: string | null,
+  s?: string
+}
+
+export function playlistDetail(params: playlistDetailParams): Promise<res> {
+  return http.get('/playlist/detail', {
+    params
+  })
+}
+
+
 

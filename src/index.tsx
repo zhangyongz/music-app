@@ -13,6 +13,7 @@ import {
 
 import Record from './views/record/Record'
 import Collection from './views/collection/Collection'
+import PlayList from './views/play-list/PlayList'
 
 // ReactDOM
 //   .createRoot(document.getElementById('root'))
@@ -30,6 +31,7 @@ ReactDOM.render(
           <Route path="/" element={<App />}>
             <Route path="record" element={<Record />} />
             <Route path="collection" element={<Collection />} />
+            <Route path="play-list" element={<PlayList />} />
           </Route>
         </Routes>
       </BrowserRouter>

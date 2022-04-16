@@ -9,7 +9,7 @@ export const usersSlice = createSlice({
   },
   reducers: {
     setProfile: (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.profile = action.payload
     },
     setTracks: (state, action) => {

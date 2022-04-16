@@ -25,7 +25,7 @@ const AudioPlayer: React.FC = () => {
   // let audioRef = useRef(new Audio(audioSrc));
 
   // if (tracks[trackIndex]) {
-  const song = tracks[trackIndex]?.song || {};
+  const song = tracks[trackIndex] || {};
   const title = song.name
   const artist = song.ar?.map((item: artist) => {
     return item.name

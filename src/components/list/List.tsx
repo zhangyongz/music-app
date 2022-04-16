@@ -31,15 +31,15 @@ const List: React.FC<ListProps> = (props) => {
         </Affix>
         {
           props.data.map((item) => {
-            return (<li key={item.song.id} className="list_item"
+            return (<li key={item.id} className="list_item"
               onClick={() => {clickItemHandle(item)}}>
-              <span className='name'>{item.song.name}</span>
-              <span className='ar'>{item.song.ar.map((item, index) => {
+              <span className='name'>{item.name}</span>
+              <span className='ar'>{item.ar.map((item, index) => {
                 let symbol = index === 0 ? '' : ' / '
                 return symbol + item.name
               })}</span>
-              <span className='al'>{item.song.al.name}</span>
-              <span className='time'>{formatMilliSecond(item.song.dt)}</span>
+              <span className='al'>{item.al.name}</span>
+              <span className='time'>{formatMilliSecond(item.dt)}</span>
             </li>)
           })
         }
