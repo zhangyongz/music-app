@@ -42,7 +42,7 @@ const Record: React.FC = () => {
   return (
     <div className='record_box'>
       <p className='total_text'>共{listData.length}首</p>
-      <PlayBtn onClick={handleClick}></PlayBtn>
+      <PlayBtn className="paly_btn" onClick={handleClick}></PlayBtn>
       <List data={listData}></List>
     </div>
   )

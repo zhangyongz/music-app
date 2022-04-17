@@ -19,3 +19,10 @@ export interface playListItemInterface {
 }
 
 export type playListType = playListItemInterface[]
+
+export interface playListInfoInterface {
+  coverImgUrl: string,
+  name: string,
+  tags: [],
+  description: string
+}
