@@ -98,6 +98,10 @@ const AudioPlayer: React.FC = () => {
     }
   }, []);
 
+  useEffect(() => {
+    setTrackIndex(0)
+  }, [tracks])
+
   // Handle setup when changing tracks
   useEffect(() => {
     audioRef.current.pause();
