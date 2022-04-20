@@ -9,6 +9,7 @@ import { Spin, Modal } from 'antd'
 
 import './App.less'
 import AudioPlayer from "./components/audio/AudioPlayer"
+import Lyric from './components/lyric/Lyric'
 // import tracks from "./components/audio/tracks"
 
 // import avatar from './assets/images/wallhaven-y8wdlx.jpeg'
@@ -143,6 +144,7 @@ const App: React.FC = () => {
         <div className="App">
           <AudioMenu></AudioMenu>
           <AudioPlayer></AudioPlayer>
+          <Lyric></Lyric>
           {/* <nav
             style={{
               paddingBottom: "1rem",
