@@ -25,8 +25,9 @@ const Lyric: React.FC = () => {
           <div className='lyric_list_wrapper'>
             <div className='lyric_list'>
               {new Array(50).fill(0).map((item, index) => {
+                let active = index === 0 ? 'active': ''
                 return (
-                  <p key={index} className='lyric_item'>树阴下的人想睡</p>
+                  <p key={index} className={'lyric_item ' + active}>树阴下的人想睡</p>
                 )
               })}
             </div>
