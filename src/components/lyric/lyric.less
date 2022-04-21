@@ -1,3 +1,5 @@
+
+
 .lyric_box {
   width: 100%;
   position: fixed;
@@ -6,6 +8,14 @@
   bottom: 60px;
   z-index: 15;
   background-color: #f9f9f9;
+  transition: transform ease-in-out .5s;
+  
+  &.active {
+    transform: translateY(0);
+  }
+  &.deactive {
+    transform: translateY(100%);
+  }
   .lyric_container {
     width: 900px;
     margin: 0 auto;
