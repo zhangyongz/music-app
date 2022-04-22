@@ -20,13 +20,30 @@ const AudioProfile: React.FC<AudioProfileProps> = (props) => {
   const dispatch = useAppDispatch()
 
   function toggleLyricShow() {
+    if (!lyricShow) {
+      setMaskShow(true)
+    } else {
+      setMaskShow(false)
+    }
     dispatch(setLyricShow(!lyricShow))
+  }
+
+  function mouseEnterHandle(){
+    if (!lyricShow) {
+      setMaskShow(true)
+    }
+  }
+
+  function onMouseLeaveHandle(){
+    if (!lyricShow) {
+      setMaskShow(false)
+    }
   }
 
   return (
     <div className="audio_profile">
-      <div className='profile_img_wrapper' onMouseEnter={() => {setMaskShow(true)}}
-        onMouseLeave={() => {setMaskShow(false)}} onClick={toggleLyricShow}>
+      <div className='profile_img_wrapper' onMouseEnter={mouseEnterHandle}
+        onMouseLeave={onMouseLeaveHandle} onClick={toggleLyricShow}>
         <img src={props.image} alt="" className="profile_img" />
         {maskShow ? 
         <div className='pofile_img_mask flex_center'>
