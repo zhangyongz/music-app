@@ -88,5 +88,13 @@ export function playlistDetail(params: playlistDetailParams): Promise<res> {
   })
 }
 
+interface getLyricParams {
+  id: string
+}
 
-
+// 获取歌词
+export function getLyric(params: getLyricParams): Promise<res> {
+  return http.get('/lyric', {
+    params
+  })
+}

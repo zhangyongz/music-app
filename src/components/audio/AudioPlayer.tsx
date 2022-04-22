@@ -8,11 +8,20 @@ import type { artist } from '@/types'
 import { selectTracks } from '@/store/features/users/usersSlice'
 import { audioSrcPrefix } from '@/commons/const'
 
-const AudioPlayer: React.FC = () => {
+interface AudioPlayProps {
+  trackIndex: number,
+  setTrackIndex: (arg0: number) => void,
+  audioRef: React.MutableRefObject<HTMLAudioElement>,
+  isPlaying: boolean,
+  setIsPlaying: (arg0: boolean) => void,
+}
+
+const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audioRef,
+    isPlaying, setIsPlaying}) => {
   // State
-  const [trackIndex, setTrackIndex] = useState(0);
+  // const [trackIndex, setTrackIndex] = useState(0);
   const [trackProgress, setTrackProgress] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  // const [isPlaying, setIsPlaying] = useState(false);
   const tracks = useAppSelector(selectTracks)
   // console.log(tracks);
 
@@ -34,7 +43,7 @@ const AudioPlayer: React.FC = () => {
   const image = song.al?.picUrl
   const audioSrc = audioSrcPrefix + song.id + '.mp3'
   // Refs
-  const audioRef = useRef(new Audio(audioSrc));
+  // const audioRef = useRef(new Audio(audioSrc));
   // }
 
   const intervalRef = useRef<undefined | number>();

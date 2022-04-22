@@ -7,8 +7,11 @@ export interface track {
   id: number,
   name: string,
   ar: artist[],
-  al: { name: string },
-  dt: number
+  al: {
+    name: string,
+    picUrl: string
+  },
+  dt: number,
   // }
 }
 

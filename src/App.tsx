@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Outlet, useNavigate } from "react-router-dom"
 import {
   ClockCircleOutlined,
@@ -18,7 +18,8 @@ import { qrKey, qrCreate, qrCheck, userAccount, userDetail } from '@/commons/api
 import { LoadingContext } from '@/commons/context'
 
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { setProfile, selectProfile } from '@/store/features/users/usersSlice'
+import { setProfile, selectProfile, selectTracks } from '@/store/features/users/usersSlice'
+import { audioSrcPrefix } from '@/commons/const'
 
 const AudioMenu: React.FC = () => {
   const loadingContext = useContext(LoadingContext)
@@ -115,15 +116,16 @@ const AudioMenu: React.FC = () => {
 }
 
 const App: React.FC = () => {
+  // loading
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch()
-
   const loadingContextValue = {
     toggleLoading: (val: boolean) => {
       setLoading(val)
     }
   }
 
+  // userDetail
   async function getUserDetail() {
     const res = await userDetail({
       uid: '99339350'
@@ -133,18 +135,26 @@ const App: React.FC = () => {
       dispatch(setProfile(res.profile))
     }
   }
-
   useEffect(() => {
     getUserDetail()
   }, [])
+
+  // track
+  const tracks = useAppSelector(selectTracks)
+  const [trackIndex, setTrackIndex] = useState(0)
+  const song = tracks[trackIndex] || {}
+  const audioSrc = audioSrcPrefix + song.id + '.mp3'
+  const audioRef = useRef(new Audio(audioSrc))
+  const [isPlaying, setIsPlaying] = useState(false)
 
   return (
     <LoadingContext.Provider value={loadingContextValue}>
       <Spin spinning={loading}>
         <div className="App">
           <AudioMenu></AudioMenu>
-          <AudioPlayer></AudioPlayer>
-          <Lyric></Lyric>
+          <AudioPlayer trackIndex={trackIndex} setTrackIndex={setTrackIndex}
+            audioRef={audioRef} isPlaying={isPlaying} setIsPlaying={setIsPlaying}></AudioPlayer>
+          <Lyric trackIndex={trackIndex} audioRef={audioRef} isPlaying={isPlaying}></Lyric>
           {/* <nav
             style={{
               paddingBottom: "1rem",
