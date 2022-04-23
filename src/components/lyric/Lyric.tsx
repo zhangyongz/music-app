@@ -126,7 +126,7 @@ const Lyric: React.FC<LyricProps> = ({ trackIndex, audioRef, isPlaying }) => {
     <div className={'lyric_box ' + className} id="picker">
       <div className='lyric_container'>
         <div className='cover_img'>
-          <img src={song?.al.picUrl} alt="coverImg" className='img' />
+          <img src={song?.al.picUrl} alt="coverImg" className={'img ' + (isPlaying ? 'rotate' : '')} />
         </div>
 
         <div className='info_wrapper'>
