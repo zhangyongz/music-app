@@ -6,6 +6,7 @@ import { selectLyricShow, selectTracks } from '@/store/features/users/usersSlice
 import { getLyric } from '@/commons/api'
 // import img from '../../assets/images/wallhaven-y8wdlx.jpeg'
 import { track } from '@/types'
+import { scrollTopTo } from '@/commons/utils'
 
 interface LyricProps {
   trackIndex: number,
@@ -31,10 +32,10 @@ function parseLyric(lrc: string) {
     }
     const text = line.replace(timeExp, '').trim()
     // if (text) {
-      lyric.push({
-        time: (parseFloat(result[1]) * 6e4 + parseFloat(result[2]) * 1e3 + (parseFloat(result[3]) || 0) * 1) / 1e3,
-        text
-      })
+    lyric.push({
+      time: (parseFloat(result[1]) * 6e4 + parseFloat(result[2]) * 1e3 + (parseFloat(result[3]) || 0) * 1) / 1e3,
+      text
+    })
     // }
   }
   return lyric
@@ -75,9 +76,10 @@ const Lyric: React.FC<LyricProps> = ({ trackIndex, audioRef, isPlaying }) => {
   }, [lyricShow])
   let className = lyricShow ? 'active' : 'deactive'
 
-  // 歌词滚动
+  // 歌词高亮
   const [lyricIndex, setLyricIndex] = useState(0)
   const intervalRef = useRef<undefined | number>()
+
   const startTimer = () => {
     clearInterval(intervalRef.current);
     intervalRef.current = window.setInterval(() => {
@@ -99,6 +101,26 @@ const Lyric: React.FC<LyricProps> = ({ trackIndex, audioRef, isPlaying }) => {
     }
   }, [isPlaying])
 
+  // 歌词滚动
+  const listWrapper = useRef<HTMLDivElement>(null)
+  const [midIndex, setMidIndex] = useState(0)
+  useEffect(() => {
+    const offsetHeight = listWrapper.current?.offsetHeight || 0
+    // console.log(offsetHeight);
+    setMidIndex(Math.floor(offsetHeight / 2 / 28))
+  }, [])
+  useEffect(() => {
+    const distanceIndex = lyricIndex - midIndex - 1
+    // console.log(distanceIndex);
+    if (distanceIndex > 0) {
+      if (listWrapper.current) {
+        scrollTopTo(listWrapper.current, distanceIndex * 28)
+        // listWrapper.current.scrollTop = (distanceIndex * 28)
+      }
+    }
+  }, [lyricIndex])
+
+
 
   return (
     <div className={'lyric_box ' + className} id="picker">
@@ -115,7 +137,7 @@ const Lyric: React.FC<LyricProps> = ({ trackIndex, audioRef, isPlaying }) => {
             }).join(' / ')}</p>
           </div>
 
-          <div className='lyric_list_wrapper'>
+          <div className='lyric_list_wrapper' ref={listWrapper}>
             <div className='lyric_list'>
               {lyric.current.map((item, index) => {
                 let active = index === lyricIndex ? 'active' : ''

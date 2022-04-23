@@ -17,3 +17,25 @@ export const formatMilliSecond = (milliSecond: number) => {
   }
   return dayjs.duration(milliSecond, "millisecond").format('mm:ss')
 }
+
+export const scrollTopTo = (dom: HTMLDivElement, top: number) => {
+  let scrollTop = dom.scrollTop
+  let direction = scrollTop - top > 0 ? 'down' : 'up'
+  function recursion() {
+    if (direction === 'up' && scrollTop >= top) {
+      return
+    }
+    if (direction === 'down' && scrollTop <= top) {
+      return
+    }
+    dom.scrollTop = direction === 'up' ? ++scrollTop : --scrollTop
+    setTimeout(() => {
+      recursion()
+    }, 10)
+  }
+  if (Math.abs(scrollTop - top) > 100) {
+    dom.scrollTop = top
+  } else {
+    recursion()
+  }
+}
