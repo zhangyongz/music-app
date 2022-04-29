@@ -11,6 +11,7 @@ import {
   Route,
 } from "react-router-dom";
 
+import { PrivateRoute } from '@/components/PrivateRoute'
 import Record from './views/record/Record'
 import Collection from './views/collection/Collection'
 import PlayList from './views/play-list/PlayList'
@@ -28,10 +29,10 @@ ReactDOM.render(
     <Provider store={store}>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<App />}>
-            <Route path="record" element={<Record />} />
-            <Route path="collection" element={<Collection />} />
-            <Route path="play-list" element={<PlayList />} />
+          <Route path="/" element={<PrivateRoute component={App} />}>
+            <Route path="record" element={<PrivateRoute component={Record} />} />
+            <Route path="collection" element={<PrivateRoute component={Collection} />} />
+            <Route path="play-list" element={<PrivateRoute component={PlayList} />} />
           </Route>
         </Routes>
       </BrowserRouter>
