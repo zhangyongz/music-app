@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef, useMemo } from 'react'
 
 import './lyric.less'
 import { useAppSelector } from '@/store/hooks'
@@ -44,7 +44,9 @@ function parseLyric(lrc: string) {
 
 const Lyric: React.FC<LyricProps> = ({ trackIndex, audioRef, isPlaying }) => {
   const tracks = useAppSelector(selectTracks)
-  const song: track = tracks[trackIndex]
+  const song: track = useMemo(() => {
+    return tracks[trackIndex]
+  }, [tracks, trackIndex])
 
   // 歌词
   // const [lyric, setLyric] = useState<lyricItemInterface[]>([])
@@ -120,7 +122,17 @@ const Lyric: React.FC<LyricProps> = ({ trackIndex, audioRef, isPlaying }) => {
     }
   }, [lyricIndex])
 
-
+  // 歌词布局
+  const infoTitle = useRef<HTMLDivElement>(null)
+  const [topPx, setTopPx] = useState(0)
+  useEffect(() => {
+    setTimeout(() => {
+      let px = infoTitle.current?.getBoundingClientRect().bottom || 0
+      px += 10
+      setTopPx(px)
+    },500)
+  }, [song, lyricShow])
+  
 
   return (
     <div className={'lyric_box ' + className}>
@@ -130,14 +142,14 @@ const Lyric: React.FC<LyricProps> = ({ trackIndex, audioRef, isPlaying }) => {
         </div>
 
         <div className='info_wrapper'>
-          <div className='info_title'>
+          <div className='info_title' ref={infoTitle}>
             <p className='name'>{song?.name}</p>
             <p className='label'>专辑：{song?.al.name} 歌手：{song?.ar.map((item) => {
               return item.name
             }).join(' / ')}</p>
           </div>
 
-          <div className='lyric_list_wrapper' ref={listWrapper}>
+          <div className='lyric_list_wrapper' ref={listWrapper} style={{top: topPx}}>
             <div className='lyric_list'>
               {lyric.current.map((item, index) => {
                 let active = index === lyricIndex ? 'active' : ''

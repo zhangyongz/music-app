@@ -1,5 +1,6 @@
 .audio_player {
   position: relative;
+
   .audio_bar {
     width: 100%;
     height: 60px;
@@ -11,6 +12,7 @@
     z-index: 20;
     background-color: #ffffff;
   }
+
   .audio_progress {
     width: 100%;
     height: 2px;
@@ -21,12 +23,13 @@
     border-radius: 8px;
     transition: background 0.2s ease;
     cursor: pointer;
+
     &::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 12px;
       height: 12px;
       border-radius: 50%;
-      background-color:#c4463a;
+      background-color: #c4463a;
       cursor: pointer;
     }
   }
@@ -40,11 +43,13 @@
   justify-content: space-between;
   align-items: center;
   margin: 0 auto 15px;
+
   button {
     background: none;
     border: none;
     cursor: pointer;
   }
+
   path {
     fill: #c4463a;
   }
@@ -52,21 +57,26 @@
 
 .audio_profile {
   flex: 1;
+  width: 0;
   height: 100%;
   display: flex;
   align-items: center;
   margin-left: 10px;
+
   .profile_img_wrapper {
+    flex: 0 0 auto;
     width: 40px;
     height: 40px;
     position: relative;
     cursor: pointer;
+
     .profile_img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       border-radius: 5px;
     }
+
     .pofile_img_mask {
       width: 100%;
       height: 100%;
@@ -78,18 +88,28 @@
       border-radius: 5px;
     }
   }
-  
+
   .proflie_info {
+    width: 0;
+    flex: 1;
     margin-left: 10px;
+
     .info_text {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
       .title {
         font-size: 16px;
+
       }
+
       .artist {
         font-size: 12px;
         color: #7f7f7f;
       }
     }
+
     .info_time {
       font-size: 12px;
       color: #acacac;
