@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect, useRef, useCallback } from 'react'
-import { Outlet, useNavigate } from "react-router-dom"
+import React, { useContext, useState, useEffect, useRef } from 'react'
+import { Outlet, NavLink } from "react-router-dom"
 import {
   ClockCircleOutlined,
   UserOutlined,
@@ -29,7 +29,6 @@ const AudioMenu: React.FC = () => {
   const [timer, setTimer] = useState<undefined | number>()
 
   const profile = useAppSelector(selectProfile)
-  let navigate = useNavigate()
 
   function startQrCheck(key: string) {
     let timer = window.setTimeout(async () => {
@@ -74,16 +73,6 @@ const AudioMenu: React.FC = () => {
     }
   }
 
-  const goRecordHandle = useCallback(() => {
-    navigate('/record')
-  }, [])
-  const goCollectionHandle = useCallback(() => {
-    navigate('/collection')
-  }, [])
-  const goRankHandle = useCallback(() => {
-    navigate('/rank')
-  }, [])
-
   return (
     <div className='audio_menu'>
       {
@@ -99,17 +88,32 @@ const AudioMenu: React.FC = () => {
           </div>
       }
       <ul className='menu_list'>
-        <li className='list_item' onClick={goRecordHandle}>
-          <ClockCircleOutlined style={{ fontSize: '20px' }} />
-          <span className='text'>最近播放</span>
+      <li className='list_item'>
+          <NavLink to="rank"
+            className={({ isActive }) =>
+              isActive ? 'active link' : 'link'
+            }>
+            <LikeOutlined style={{ fontSize: '20px' }} />
+            <span className='text'>精品歌单</span>
+          </NavLink>
         </li>
-        <li className='list_item' onClick={goCollectionHandle}>
-          <CustomerServiceOutlined style={{ fontSize: '20px' }} />
-          <span className='text'>我的歌单</span>
+        <li className='list_item'>
+          <NavLink to="record"
+            className={({ isActive }) =>
+              isActive ? 'active link' : 'link'
+            }>
+            <ClockCircleOutlined style={{ fontSize: '20px' }} />
+            <span className='text'>最近播放</span>
+          </NavLink>
         </li>
-        <li className='list_item' onClick={goRankHandle}>
-          <LikeOutlined style={{ fontSize: '20px' }} />
-          <span className='text'>精品歌单</span>
+        <li className='list_item'>
+          <NavLink to="collection"
+            className={({ isActive }) =>
+              isActive ? 'active link' : 'link'
+            }>
+            <CustomerServiceOutlined style={{ fontSize: '20px' }} />
+            <span className='text'>我的歌单</span>
+          </NavLink>
         </li>
       </ul>
 
@@ -118,7 +122,7 @@ const AudioMenu: React.FC = () => {
         onCancel={() => { setQrShow(false) }}>
         <img src={qrImg} className="qr_img" />
       </Modal>
-    </div>
+    </div >
   )
 }
 
@@ -157,7 +161,7 @@ const App: React.FC = () => {
       content: '当前音乐不可播放，已自动播放下一曲',
       duration: 1
     });
-    
+
     setTrackIndex((trackIndex) => {
       return trackIndex + 1
     })
