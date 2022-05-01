@@ -1,9 +1,10 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, { useContext, useState, useEffect, useRef, useCallback } from 'react'
 import { Outlet, useNavigate } from "react-router-dom"
 import {
   ClockCircleOutlined,
   UserOutlined,
-  CustomerServiceOutlined
+  CustomerServiceOutlined,
+  LikeOutlined
 } from '@ant-design/icons'
 import { Spin, Modal } from 'antd'
 
@@ -73,13 +74,15 @@ const AudioMenu: React.FC = () => {
     }
   }
 
-  function goRecordHandle() {
+  const goRecordHandle = useCallback(() => {
     navigate('/record')
-  }
-
-  function goCollectionHandle() {
+  }, [])
+  const goCollectionHandle = useCallback(() => {
     navigate('/collection')
-  }
+  }, [])
+  const goRankHandle = useCallback(() => {
+    navigate('/rank')
+  }, [])
 
   return (
     <div className='audio_menu'>
@@ -103,6 +106,10 @@ const AudioMenu: React.FC = () => {
         <li className='list_item' onClick={goCollectionHandle}>
           <CustomerServiceOutlined style={{ fontSize: '20px' }} />
           <span className='text'>我的歌单</span>
+        </li>
+        <li className='list_item' onClick={goRankHandle}>
+          <LikeOutlined style={{ fontSize: '20px' }} />
+          <span className='text'>精品歌单</span>
         </li>
       </ul>
 

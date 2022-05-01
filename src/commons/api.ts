@@ -98,3 +98,8 @@ export function getLyric(params: getLyricParams): Promise<res> {
     params
   })
 }
+
+// 歌单 ( 网友精选碟 )
+export function getTopList(): Promise<res> {
+  return http.get('/top/playlist/highquality')
+}

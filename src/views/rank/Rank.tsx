@@ -1,13 +1,13 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { useAppSelector } from '@/store/hooks'
 import { useNavigate } from "react-router-dom"
 
-import { userPlaylist } from '@/commons/api'
+import { getTopList } from '@/commons/api'
 import { selectUid } from '@/store/features/users/usersSlice'
 import { playListType, playListItemInterface } from '@/types'
-import './collection.less'
+import './rank.less'
 
-const Collection: React.FC = () => {
+const Rank: React.FC = () => {
   const navigate = useNavigate()
 
   const uid = useAppSelector(selectUid)
@@ -17,13 +17,10 @@ const Collection: React.FC = () => {
     if (!uid) {
       return
     }
-    let res = await userPlaylist({
-      uid,
-      limit: '100'
-    })
+    let res = await getTopList()
     if (res.code === 200) {
       // console.log(res);
-      setplayList(res.playlist)
+      setplayList(res.playlists)
     }
   }, [uid])
 
@@ -36,10 +33,10 @@ const Collection: React.FC = () => {
   }, [getList])
 
   return (
-    <div className='collection_box'>
+    <div className='rank_list'>
       <ul className='collection_wrapper'>
         {playList.map((item) => {
-          return <li className='collection_item' key={item.id} onClick={() => { clickHandle(item) }}>
+          return <li className='collection_item' key={item.id} onClick={() => {clickHandle(item)}}>
             <div className='img_wrapper'>
               <img src={item.coverImgUrl} alt="" className='img' />
             </div>
@@ -51,4 +48,4 @@ const Collection: React.FC = () => {
   )
 }
 
-export default Collection
+export default Rank

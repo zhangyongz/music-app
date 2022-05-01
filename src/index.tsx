@@ -15,6 +15,7 @@ import { PrivateRoute } from '@/components/PrivateRoute'
 import Record from './views/record/Record'
 import Collection from './views/collection/Collection'
 import PlayList from './views/play-list/PlayList'
+import Rank from './views/rank/Rank'
 
 // ReactDOM
 //   .createRoot(document.getElementById('root'))
@@ -33,6 +34,7 @@ ReactDOM.render(
             <Route path="record" element={<PrivateRoute component={Record} />} />
             <Route path="collection" element={<PrivateRoute component={Collection} />} />
             <Route path="play-list" element={<PrivateRoute component={PlayList} />} />
+            <Route path="rank" element={<PrivateRoute component={Rank} />} />
           </Route>
         </Routes>
       </BrowserRouter>
