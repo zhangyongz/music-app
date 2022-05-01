@@ -1,11 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '@/store'
+import tracks from '@/assets/data/tracks'
 
 export const usersSlice = createSlice({
   name: 'users',
   initialState: {
     profile: {},
-    tracks: [],
+    tracks: tracks,
     lyricShow: false
   },
   reducers: {

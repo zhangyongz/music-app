@@ -6,7 +6,7 @@ import {
   CustomerServiceOutlined,
   LikeOutlined
 } from '@ant-design/icons'
-import { Spin, Modal } from 'antd'
+import { Spin, Modal, message } from 'antd'
 
 import './App.less'
 import AudioPlayer from "./components/audio/AudioPlayer"
@@ -152,6 +152,16 @@ const App: React.FC = () => {
   const song = tracks[trackIndex] || {}
   const audioSrc = audioSrcPrefix + song.id + '.mp3'
   const audioRef = useRef(new Audio(audioSrc))
+  audioRef.current.onerror = () => {
+    message.warning({
+      content: '当前音乐不可播放，已自动播放下一曲',
+      duration: 1
+    });
+    
+    setTrackIndex((trackIndex) => {
+      return trackIndex + 1
+    })
+  }
   const [isPlaying, setIsPlaying] = useState(false)
 
   return (
