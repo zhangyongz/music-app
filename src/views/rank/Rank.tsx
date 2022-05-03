@@ -1,28 +1,22 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { useAppSelector } from '@/store/hooks'
 import { useNavigate } from "react-router-dom"
 
 import { getTopList } from '@/commons/api'
-import { selectUid } from '@/store/features/users/usersSlice'
 import { playListType, playListItemInterface } from '@/types'
 import './rank.less'
 
 const Rank: React.FC = () => {
   const navigate = useNavigate()
 
-  const uid = useAppSelector(selectUid)
   const [playList, setplayList] = useState<playListType>([])
 
   const getList = useCallback(async () => {
-    if (!uid) {
-      return
-    }
     let res = await getTopList()
     if (res.code === 200) {
       // console.log(res);
       setplayList(res.playlists)
     }
-  }, [uid])
+  }, [])
 
   const clickHandle = useCallback((item: playListItemInterface) => {
     navigate('/play-list?id=' + item.id)

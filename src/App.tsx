@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef, useCallback } from 'react'
 import { Outlet, NavLink } from "react-router-dom"
 import {
   ClockCircleOutlined,
@@ -6,78 +6,55 @@ import {
   CustomerServiceOutlined,
   LikeOutlined
 } from '@ant-design/icons'
-import { Spin, Modal, message } from 'antd'
+import { Spin, message } from 'antd'
 
 import './App.less'
 import AudioPlayer from "./components/audio/AudioPlayer"
 import Lyric from './components/lyric/Lyric'
-// import tracks from "./components/audio/tracks"
 
-// import avatar from './assets/images/wallhaven-y8wdlx.jpeg'
-
-import { qrKey, qrCreate, qrCheck, userAccount, userDetail } from '@/commons/api'
+import { userDetail } from '@/commons/api'
 import { LoadingContext } from '@/commons/context'
 
 import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { setProfile, selectProfile, selectTracks } from '@/store/features/users/usersSlice'
+import { setProfile, selectUid, selectProfile, selectTracks } from '@/store/features/users/usersSlice'
 import { audioSrcPrefix } from '@/commons/const'
 
+import LoginModal from '@/components/login-modal/LoginModal'
+
 const AudioMenu: React.FC = () => {
-  const loadingContext = useContext(LoadingContext)
-  const [qrShow, setQrShow] = useState(false)
-  const [qrImg, setQrImg] = useState('')
-  const [timer, setTimer] = useState<undefined | number>()
+  const dispatch = useAppDispatch()
 
   const profile = useAppSelector(selectProfile)
+  const uid = useAppSelector(selectUid)
 
-  function startQrCheck(key: string) {
-    let timer = window.setTimeout(async () => {
-      const { code } = await qrCheck({
-        key
-      })
-      if (code === 803) {
-        loadingContext.toggleLoading(true)
-        setQrShow(false)
-        const { code, data } = await userAccount()
-        loadingContext.toggleLoading(false)
-        if (code === 200) {
-          console.log(data)
-        }
-      } else if (code === 801 || code === 802) {
-        startQrCheck(key)
-      }
-    }, 3000)
-    setTimer(timer)
-  }
+  const [loginShow, setLoginShow] = useState(false)
+  const loginHandle = useCallback(() => {
+    setLoginShow(true)
+  }, [])
 
-  function afterCloseModelHandle() {
-    window.clearTimeout(timer)
-  }
-
-  async function loginHandle() {
-    loadingContext.toggleLoading(true)
-    const res = await qrKey()
-    if (res.code === 200) {
-      const res2 = await qrCreate({
-        key: res.data.unikey,
-        qrimg: '1'
-      })
-      loadingContext.toggleLoading(false)
-      if (res2.code === 200) {
-        setQrShow(true)
-        setQrImg(res2.data.qrimg)
-        startQrCheck(res.data.unikey)
-      }
-    } else {
-      loadingContext.toggleLoading(false)
+  // userDetail
+  const getUserDetail = useCallback(async () => {
+    if (!uid) {
+      return
     }
-  }
+    const res = await userDetail({
+      uid
+    })
+    if (res.code === 200) {
+      // console.log(res);
+      dispatch(setProfile(res.profile))
+    }
+  }, [uid])
+
+  useEffect(() => {
+    getUserDetail()
+  }, [getUserDetail])
 
   return (
     <div className='audio_menu'>
       {
-        profile.avatarUrl ?
-          <div className='menu_avatar'>
+        profile.userId ?
+          <div className='menu_avatar' onClick={loginHandle}>
             <img src={profile.avatarUrl} alt='avatar' className='avatar' />
             <p className='username'>{profile.nickname}</p>
           </div>
@@ -88,7 +65,7 @@ const AudioMenu: React.FC = () => {
           </div>
       }
       <ul className='menu_list'>
-      <li className='list_item'>
+        <li className='list_item'>
           <NavLink to="rank"
             className={({ isActive }) =>
               isActive ? 'active link' : 'link'
@@ -117,11 +94,7 @@ const AudioMenu: React.FC = () => {
         </li>
       </ul>
 
-      <Modal title="网易云扫描二维码登录" visible={qrShow} footer={null}
-        transitionName="" maskTransitionName="" afterClose={afterCloseModelHandle}
-        onCancel={() => { setQrShow(false) }}>
-        <img src={qrImg} className="qr_img" />
-      </Modal>
+      <LoginModal visible={loginShow} setVisible={setLoginShow}></LoginModal>
     </div >
   )
 }
@@ -129,26 +102,11 @@ const AudioMenu: React.FC = () => {
 const App: React.FC = () => {
   // loading
   const [loading, setLoading] = useState(false);
-  const dispatch = useAppDispatch()
   const loadingContextValue = {
     toggleLoading: (val: boolean) => {
       setLoading(val)
     }
   }
-
-  // userDetail
-  async function getUserDetail() {
-    const res = await userDetail({
-      uid: '99339350'
-    })
-    if (res.code === 200) {
-      // console.log(res);
-      dispatch(setProfile(res.profile))
-    }
-  }
-  useEffect(() => {
-    getUserDetail()
-  }, [])
 
   // track
   const tracks = useAppSelector(selectTracks)
