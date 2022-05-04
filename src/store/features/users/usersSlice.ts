@@ -5,7 +5,11 @@ import tracks from '@/assets/data/tracks'
 export const usersSlice = createSlice({
   name: 'users',
   initialState: {
-    profile: {},
+    profile: {
+      userId: '',
+      avatarUrl: '',
+      nickname: ''
+    },
     tracks: tracks,
     lyricShow: false
   },

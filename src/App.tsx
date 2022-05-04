@@ -12,43 +12,21 @@ import './App.less'
 import AudioPlayer from "./components/audio/AudioPlayer"
 import Lyric from './components/lyric/Lyric'
 
-import { userDetail } from '@/commons/api'
 import { LoadingContext } from '@/commons/context'
 
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { setProfile, selectUid, selectProfile, selectTracks } from '@/store/features/users/usersSlice'
+import { useAppSelector } from '@/store/hooks'
+import { selectProfile, selectTracks } from '@/store/features/users/usersSlice'
 import { audioSrcPrefix } from '@/commons/const'
 
 import LoginModal from '@/components/login-modal/LoginModal'
 
 const AudioMenu: React.FC = () => {
-  const dispatch = useAppDispatch()
-
   const profile = useAppSelector(selectProfile)
-  const uid = useAppSelector(selectUid)
 
   const [loginShow, setLoginShow] = useState(false)
   const loginHandle = useCallback(() => {
     setLoginShow(true)
   }, [])
-
-  // userDetail
-  const getUserDetail = useCallback(async () => {
-    if (!uid) {
-      return
-    }
-    const res = await userDetail({
-      uid
-    })
-    if (res.code === 200) {
-      // console.log(res);
-      dispatch(setProfile(res.profile))
-    }
-  }, [uid])
-
-  useEffect(() => {
-    getUserDetail()
-  }, [getUserDetail])
 
   return (
     <div className='audio_menu'>
