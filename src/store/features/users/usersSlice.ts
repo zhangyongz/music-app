@@ -11,7 +11,8 @@ export const usersSlice = createSlice({
       nickname: ''
     },
     tracks: tracks,
-    lyricShow: false
+    lyricShow: false,
+    loginShow: false
   },
   reducers: {
     setProfile: (state, action) => {
@@ -23,15 +24,19 @@ export const usersSlice = createSlice({
     },
     setLyricShow: (state, action) => {
       state.lyricShow = action.payload
+    },
+    setLoginShow: (state, action) => {
+      state.loginShow = action.payload
     }
   }
 })
 
-export const { setProfile, setTracks, setLyricShow } = usersSlice.actions
+export const { setProfile, setTracks, setLyricShow, setLoginShow } = usersSlice.actions
 
 export const selectProfile = (state: RootState) => state.users.profile
 export const selectUid = (state: RootState) => state.users.profile.userId
 export const selectTracks = (state: RootState) => state.users.tracks
 export const selectLyricShow = (state: RootState) => state.users.lyricShow
+export const selectLoginShow = (state: RootState) => state.users.loginShow
 
 export default usersSlice.reducer

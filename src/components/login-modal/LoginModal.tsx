@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useState } from "react"
 import { Modal, Input } from 'antd'
+import { useNavigate, useSearchParams } from "react-router-dom"
 
 import { useAppDispatch } from '@/store/hooks'
 import { setProfile } from '@/store/features/users/usersSlice'
@@ -22,6 +23,10 @@ const LoginModal: React.FC<Props> = ({visible, setVisible}) => {
   const dispatch = useAppDispatch()
   const loadingContext = useContext(LoadingContext)
 
+  const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const path = searchParams.get('path')
+
   const handleOk = async () => {
     loadingContext.toggleLoading(true)
     const res = await userDetail({
@@ -31,6 +36,9 @@ const LoginModal: React.FC<Props> = ({visible, setVisible}) => {
     if (res.code === 200) {
       setVisible(false)
       dispatch(setProfile(res.profile))
+      if (path) {
+        navigate(path, { replace: true })
+      }
     }
   };
 
@@ -40,7 +48,8 @@ const LoginModal: React.FC<Props> = ({visible, setVisible}) => {
   };
 
   return (
-    <Modal title="登录" visible={visible} onOk={handleOk} onCancel={handleCancel} transitionName="" maskTransitionName="">
+    <Modal title="登录" visible={visible} onOk={handleOk} onCancel={handleCancel}
+      transitionName="" maskTransitionName="">
         <Input placeholder="网易云用户id" value={inputValue} onChange={inputChange} />
         {/* <Button type="primary" onClick={sureHandle} style={{margin: '10px auto'}}>
           确定

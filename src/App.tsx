@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useCallback } from 'react'
+import React, {useState, useRef, useCallback } from 'react'
 import { Outlet, NavLink } from "react-router-dom"
 import {
   ClockCircleOutlined,
@@ -14,8 +14,8 @@ import Lyric from './components/lyric/Lyric'
 
 import { LoadingContext } from '@/commons/context'
 
-import { useAppSelector } from '@/store/hooks'
-import { selectProfile, selectTracks } from '@/store/features/users/usersSlice'
+import { useAppDispatch, useAppSelector } from '@/store/hooks'
+import { selectProfile, selectTracks, selectLoginShow, setLoginShow } from '@/store/features/users/usersSlice'
 import { audioSrcPrefix } from '@/commons/const'
 
 import LoginModal from '@/components/login-modal/LoginModal'
@@ -23,9 +23,14 @@ import LoginModal from '@/components/login-modal/LoginModal'
 const AudioMenu: React.FC = () => {
   const profile = useAppSelector(selectProfile)
 
-  const [loginShow, setLoginShow] = useState(false)
+  const dispatch = useAppDispatch()
+  const loginShow = useAppSelector(selectLoginShow)
   const loginHandle = useCallback(() => {
-    setLoginShow(true)
+    dispatch(setLoginShow(true))
+  }, [])
+
+  const setVisibleHandle = useCallback((val) => {
+    dispatch(setLoginShow(val))
   }, [])
 
   return (
@@ -72,7 +77,7 @@ const AudioMenu: React.FC = () => {
         </li>
       </ul>
 
-      <LoginModal visible={loginShow} setVisible={setLoginShow}></LoginModal>
+      <LoginModal visible={loginShow} setVisible={setVisibleHandle}></LoginModal>
     </div >
   )
 }
@@ -112,14 +117,6 @@ const App: React.FC = () => {
           <AudioPlayer trackIndex={trackIndex} setTrackIndex={setTrackIndex}
             audioRef={audioRef} isPlaying={isPlaying} setIsPlaying={setIsPlaying}></AudioPlayer>
           <Lyric trackIndex={trackIndex} audioRef={audioRef} isPlaying={isPlaying}></Lyric>
-          {/* <nav
-            style={{
-              paddingBottom: "1rem",
-            }}
-          >
-            <Link to="/invoices">Invoices</Link> |{" "}
-            <Link to="/expenses">Expenses</Link>
-          </nav> */}
           <div className='container'>
             <Outlet />
           </div>

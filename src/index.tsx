@@ -31,8 +31,8 @@ ReactDOM.render(
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PrivateRoute component={App} />}>
-            <Route path="record" element={<PrivateRoute component={Record} />} />
-            <Route path="collection" element={<PrivateRoute component={Collection} />} />
+            <Route path="record" element={<PrivateRoute component={Record} needAuth={true} path='record' />} />
+            <Route path="collection" element={<PrivateRoute component={Collection} needAuth={true} path='collection' />} />
             <Route path="play-list" element={<PrivateRoute component={PlayList} />} />
             <Route path="rank" element={<PrivateRoute component={Rank} />} />
           </Route>
