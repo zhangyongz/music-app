@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "@/store";
 import tracks from "@/assets/data/tracks";
+import { ProfileInterface, track } from "@/types/index";
 
 export const usersSlice = createSlice({
   name: "users",
@@ -33,10 +34,10 @@ export const usersSlice = createSlice({
 
 export const { setProfile, setTracks, setLyricShow, setLoginShow } = usersSlice.actions;
 
-export const selectProfile = (state: RootState) => state.users.profile;
-export const selectUid = (state: RootState) => state.users.profile.userId;
-export const selectTracks = (state: RootState) => state.users.tracks;
-export const selectLyricShow = (state: RootState) => state.users.lyricShow;
-export const selectLoginShow = (state: RootState) => state.users.loginShow;
+export const selectProfile = (state: RootState): ProfileInterface => state.users.profile;
+export const selectUid = (state: RootState): string => state.users.profile.userId;
+export const selectTracks = (state: RootState): track[] => state.users.tracks;
+export const selectLyricShow = (state: RootState): boolean => state.users.lyricShow;
+export const selectLoginShow = (state: RootState): boolean => state.users.loginShow;
 
 export default usersSlice.reducer;

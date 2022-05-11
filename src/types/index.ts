@@ -29,3 +29,9 @@ export interface playListInfoInterface {
   tags: [],
   description: string
 }
+
+export interface ProfileInterface {
+  userId: string,
+  avatarUrl: string,
+  nickname: string
+}
