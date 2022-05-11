@@ -1,10 +1,10 @@
 // import { AxiosResponse } from 'axios'
-import http from '@/commons/http'
+import http from "@/commons/http";
 
 type res = any
 
 export function qrKey(): Promise<res> {
-  return http.get('/login/qr/key')
+  return http.get("/login/qr/key");
 }
 
 interface qrCreateParams {
@@ -13,9 +13,9 @@ interface qrCreateParams {
 }
 
 export function qrCreate(params: qrCreateParams): Promise<res> {
-  return http.get('/login/qr/create', {
+  return http.get("/login/qr/create", {
     params
-  })
+  });
 }
 
 interface qrCheckParams {
@@ -23,14 +23,14 @@ interface qrCheckParams {
 }
 
 export function qrCheck(params: qrCheckParams): Promise<res> {
-  return http.get('/login/qr/check', {
+  return http.get("/login/qr/check", {
     params
-  })
+  });
 }
 
 // 获取账号信息
 export function userAccount(): Promise<res> {
-  return http.get('/user/account')
+  return http.get("/user/account");
 }
 
 interface userIdParams {
@@ -39,9 +39,9 @@ interface userIdParams {
 
 // 获取用户详情
 export function userDetail(params: userIdParams): Promise<res> {
-  return http.get('/user/detail', {
+  return http.get("/user/detail", {
     params
-  })
+  });
 }
 
 interface userRecordParams {
@@ -50,9 +50,9 @@ interface userRecordParams {
 }
 
 export function userRecord(params: userRecordParams): Promise<res> {
-  return http.get('/user/record', {
+  return http.get("/user/record", {
     params
-  })
+  });
 }
 
 interface songUrlParams {
@@ -61,9 +61,9 @@ interface songUrlParams {
 }
 
 export function songUrl(params: songUrlParams): Promise<res> {
-  return http.get('/song/url', {
+  return http.get("/song/url", {
     params
-  })
+  });
 }
 
 interface userPlaylistParams extends userIdParams {
@@ -72,9 +72,9 @@ interface userPlaylistParams extends userIdParams {
 
 // 获取用户歌单
 export function userPlaylist(params: userPlaylistParams): Promise<res> {
-  return http.get('/user/playlist', {
+  return http.get("/user/playlist", {
     params
-  })
+  });
 }
 
 interface playlistDetailParams {
@@ -83,9 +83,9 @@ interface playlistDetailParams {
 }
 
 export function playlistDetail(params: playlistDetailParams): Promise<res> {
-  return http.get('/playlist/detail', {
+  return http.get("/playlist/detail", {
     params
-  })
+  });
 }
 
 interface getLyricParams {
@@ -94,12 +94,12 @@ interface getLyricParams {
 
 // 获取歌词
 export function getLyric(params: getLyricParams): Promise<res> {
-  return http.get('/lyric', {
+  return http.get("/lyric", {
     params
-  })
+  });
 }
 
 // 歌单 ( 网友精选碟 )
 export function getTopList(): Promise<res> {
-  return http.get('/top/playlist/highquality')
+  return http.get("/top/playlist/highquality");
 }

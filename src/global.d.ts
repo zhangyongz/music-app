@@ -1,4 +1,4 @@
-declare module '*.svg' {
+declare module "*.svg" {
   interface Svg {
     content: string;
     id: string;
@@ -9,17 +9,17 @@ declare module '*.svg' {
   export default svg;
 }
 
-declare module '*.png' {
+declare module "*.png" {
   const png: string;
   export default png;
 }
 
-declare module '*.mp3' {
+declare module "*.mp3" {
   const mp3: string;
   export default mp3;
 }
 
-declare module '*.gif' {
+declare module "*.gif" {
   const png: string;
   export default png;
 }

@@ -1,33 +1,33 @@
-import axios from 'axios'
-import { message } from 'antd'
+import axios from "axios";
+import { message } from "antd";
 
-const instance = axios.create()
+const instance = axios.create();
 
-instance.defaults.withCredentials = true
+instance.defaults.withCredentials = true;
 
-instance.defaults.baseURL = 'http://localhost:3002'
+instance.defaults.baseURL = "http://localhost:3002";
 
-const sucessCode = [200, 801, 802, 803]
+const sucessCode = [200, 801, 802, 803];
 
 instance.interceptors.response.use((res) => {
   if (sucessCode.indexOf(res.data.code) === -1) {
     if (res.config.toastShow !== 0) {
-      message.warning(res.data.message)
+      message.warning(res.data.message);
     }
   }
-  return Promise.resolve(res.data)
+  return Promise.resolve(res.data);
 }, (error) => {
   if (error.config.toastShow !== 0) {
-    const { response } = error
+    const { response } = error;
     if (response) {
-      message.warning('网络请求失败，请稍后重试')
-    } else if (error.code === 'ECONNABORTED') {
-      message.warning('网络请求超时，请检查网络')
+      message.warning("网络请求失败，请稍后重试");
+    } else if (error.code === "ECONNABORTED") {
+      message.warning("网络请求超时，请检查网络");
     } else {
-      message.warning('网络连接失败，请检查网络')
+      message.warning("网络连接失败，请检查网络");
     }
   }
-  return Promise.resolve(error)
-})
+  return Promise.resolve(error);
+});
 
-export default instance
+export default instance;

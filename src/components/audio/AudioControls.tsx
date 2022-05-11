@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 import {
   StepBackwardFilled,
   StepForwardFilled,
   PlayCircleFilled,
   PauseCircleFilled
-} from '@ant-design/icons';
+} from "@ant-design/icons";
 
 interface AudioControlsProps {
   isPlaying: boolean,
@@ -27,7 +27,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         aria-label="Previous"
         onClick={onPrevClick}
       >
-        <StepBackwardFilled style={{ fontSize: '24px' }} />
+        <StepBackwardFilled style={{ fontSize: "24px" }} />
       </button>
       {isPlaying ? (
         <button
@@ -36,7 +36,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
           onClick={() => onPlayPauseClick(false)}
           aria-label="Pause"
         >
-          <PauseCircleFilled style={{ fontSize: '34px' }} />
+          <PauseCircleFilled style={{ fontSize: "34px" }} />
         </button>
       ) : (
         <button
@@ -45,7 +45,7 @@ const AudioControls: React.FC<AudioControlsProps> = ({
           onClick={() => onPlayPauseClick(true)}
           aria-label="Play"
         >
-          <PlayCircleFilled style={{ fontSize: '34px' }} />
+          <PlayCircleFilled style={{ fontSize: "34px" }} />
         </button>
       )}
       <button
@@ -54,10 +54,10 @@ const AudioControls: React.FC<AudioControlsProps> = ({
         aria-label="Next"
         onClick={onNextClick}
       >
-        <StepForwardFilled style={{ fontSize: '24px' }} />
+        <StepForwardFilled style={{ fontSize: "24px" }} />
       </button>
     </div>
-  )
-}
+  );
+};
 
 export default AudioControls;

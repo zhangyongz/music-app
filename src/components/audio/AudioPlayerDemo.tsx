@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import AudioControls from './AudioControls';
+import AudioControls from "./AudioControls";
 import Backdrop from "./Backdrop";
-import './style.css'
+import "./style.less";
 
 interface track {
   title: string,
@@ -71,20 +71,20 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
   useEffect(() => {
     if (isPlaying) {
       audioRef.current.play();
-      startTimer()
+      startTimer();
     } else {
-      clearInterval(intervalRef.current)
+      clearInterval(intervalRef.current);
       audioRef.current.pause();
     }
   }, [isPlaying]);
 
   useEffect(() => {
     // Pause and clean up on unmount
-    const audioRefCur = audioRef.current
+    const audioRefCur = audioRef.current;
     return () => {
       audioRefCur.pause();
       // clearInterval(intervalRef.current);
-    }
+    };
   }, []);
 
   // Handle setup when changing tracks
@@ -110,7 +110,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
     clearInterval(intervalRef.current);
     audioRef.current.currentTime = Number(value);
     setTrackProgress(audioRef.current.currentTime);
-  }
+  };
 
   const onScrubEnd = () => {
     // If not already playing, start
@@ -118,7 +118,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
       setIsPlaying(true);
     }
     startTimer();
-  }
+  };
 
   return (
     <div className="audio-player">
@@ -159,6 +159,6 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ tracks }) => {
       />
     </div>
   );
-}
+};
 
 export default AudioPlayer;

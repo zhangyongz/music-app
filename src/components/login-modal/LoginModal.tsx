@@ -1,11 +1,11 @@
-import React, { useCallback, useContext, useState } from "react"
-import { Modal, Input } from 'antd'
-import { useNavigate, useSearchParams } from "react-router-dom"
+import React, { useCallback, useContext, useState } from "react";
+import { Modal, Input } from "antd";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { useAppDispatch } from '@/store/hooks'
-import { setProfile } from '@/store/features/users/usersSlice'
-import { userDetail } from '@/commons/api'
-import { LoadingContext } from "@/commons/context"
+import { useAppDispatch } from "@/store/hooks";
+import { setProfile } from "@/store/features/users/usersSlice";
+import { userDetail } from "@/commons/api";
+import { LoadingContext } from "@/commons/context";
 
 interface Props {
   visible: boolean,
@@ -14,48 +14,48 @@ interface Props {
 
 const LoginModal: React.FC<Props> = ({visible, setVisible}) => {
   // input
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState("");
   const inputChange = useCallback((e) => {
     const { value } = e.target;
-    setInputValue(value)
-  }, [])
+    setInputValue(value);
+  }, []);
 
-  const dispatch = useAppDispatch()
-  const loadingContext = useContext(LoadingContext)
+  const dispatch = useAppDispatch();
+  const loadingContext = useContext(LoadingContext);
 
-  const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
-  const path = searchParams.get('path')
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const path = searchParams.get("path");
 
   const handleOk = async () => {
-    loadingContext.toggleLoading(true)
+    loadingContext.toggleLoading(true);
     const res = await userDetail({
       uid: inputValue
-    })
-    loadingContext.toggleLoading(false)
+    });
+    loadingContext.toggleLoading(false);
     if (res.code === 200) {
-      setVisible(false)
-      dispatch(setProfile(res.profile))
+      setVisible(false);
+      dispatch(setProfile(res.profile));
       if (path) {
-        navigate(path, { replace: true })
+        navigate(path, { replace: true });
       }
     }
   };
 
   const handleCancel = () => {
-    setInputValue('')
-    setVisible(false)
+    setInputValue("");
+    setVisible(false);
   };
 
   return (
     <Modal title="登录" visible={visible} onOk={handleOk} onCancel={handleCancel}
       transitionName="" maskTransitionName="">
-        <Input placeholder="网易云用户id" value={inputValue} onChange={inputChange} />
-        {/* <Button type="primary" onClick={sureHandle} style={{margin: '10px auto'}}>
+      <Input placeholder="网易云用户id" value={inputValue} onChange={inputChange} />
+      {/* <Button type="primary" onClick={sureHandle} style={{margin: '10px auto'}}>
           确定
         </Button> */}
-      </Modal>
-  )
-}
+    </Modal>
+  );
+};
 
-export default LoginModal
+export default LoginModal;

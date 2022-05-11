@@ -13,9 +13,13 @@ module.exports = {
     "plugin:react-hooks/recommended",
     "plugin:jest/recommended",
     "plugin:testing-library/react",
-    "plugin:import/recommended"
+    "plugin:import/recommended",
+    // "plugin:import/typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
   ],
-  parser: "babel-eslint", // Uses babel-eslint transforms.
+  // parser: "babel-eslint", // Uses babel-eslint transforms.
+  parser:  "@typescript-eslint/parser",
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -55,12 +59,33 @@ module.exports = {
     ],
     semi: "warn",
     "jsx-a11y/click-events-have-key-events": "off",
-    "jsx-a11y/no-noninteractive-element-interactions": "off"
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+    // "import/extensions": [
+    //   "error",
+    //   "always",
+    //   {
+    //     "js": "never",
+    //     "jsx": "never",
+    //     "ts": "never",
+    //     "tsx": "never"
+    //   }
+    // ],
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "jsx-a11y/no-static-element-interactions": "off"
   },
   settings: {
     react: {
       version: "detect" // Detect react version
-    }
+    },
+    "import/resolver": {
+      alias: {
+        map: [
+          ["@", "./src"],
+        ],
+        extensions: [".ts", ".js", ".jsx", ".tsx"], // 可忽略的后缀名
+      },
+    },
   },
   overrides: [
     {
