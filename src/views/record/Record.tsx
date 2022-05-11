@@ -41,7 +41,7 @@ const Record: React.FC = () => {
 
   const handleClick = useCallback(() => {
     dispatch(setTracks(listData));
-  }, [listData]);
+  }, [listData, dispatch]);
 
   return (
     <div className="record_box">

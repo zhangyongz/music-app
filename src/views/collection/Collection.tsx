@@ -29,7 +29,7 @@ const Collection: React.FC = () => {
 
   const clickHandle = useCallback((item: playListItemInterface) => {
     navigate("/play-list?id=" + item.id);
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     getList();

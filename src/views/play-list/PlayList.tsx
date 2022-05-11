@@ -22,10 +22,11 @@ const PlayList: React.FC = () => {
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
 
+  const id = searchParams.get("id");
   const getPlaylistDetail = useCallback(async () => {
     setLoading(true);
     const { code, playlist } = await playlistDetail({
-      id: searchParams.get("id")
+      id 
     });
     setLoading(false);
     if (code === 200) {
@@ -33,11 +34,11 @@ const PlayList: React.FC = () => {
       setInfo(playlist);
       setListData(playlist.tracks);
     }
-  }, [searchParams.get("id")]);
+  }, [id]);
 
   const handleClick = useCallback(() => {
     dispatch(setTracks(listData));
-  }, [listData]);
+  }, [listData, dispatch]);
 
   useEffect(() => {
     getPlaylistDetail();

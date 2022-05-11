@@ -4,7 +4,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(duration);
 dayjs.extend(relativeTime);
 
-export const formatSecond = (second: number) => {
+export const formatSecond = (second: number): string => {
   if (isNaN(second)) {
     return "00:00";
   }

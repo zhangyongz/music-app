@@ -27,11 +27,11 @@ const AudioMenu: React.FC = () => {
   const loginShow = useAppSelector(selectLoginShow);
   const loginHandle = useCallback(() => {
     dispatch(setLoginShow(true));
-  }, []);
+  }, [dispatch]);
 
   const setVisibleHandle = useCallback((val) => {
     dispatch(setLoginShow(val));
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="audio_menu">

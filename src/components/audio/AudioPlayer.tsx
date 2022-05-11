@@ -53,7 +53,7 @@ const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audio
     } else {
       setTrackIndex(trackIndex - 1);
     }
-  }, [tracks, trackIndex]);
+  }, [tracks, trackIndex, setTrackIndex]);
 
   const toNextTrack = useCallback(() => {
     if (trackIndex < tracks.length - 1) {
@@ -61,7 +61,7 @@ const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audio
     } else {
       setTrackIndex(0);
     }
-  }, [tracks, trackIndex]);
+  }, [tracks, trackIndex, setTrackIndex]);
 
   const startTimer = useCallback(() => {
     intervalRef.current = window.setInterval(() => {
@@ -73,7 +73,7 @@ const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audio
     }, 1000);
 
     return () => {clearInterval(intervalRef.current);};
-  }, [toNextTrack]);
+  }, [toNextTrack, audioRef]);
 
   useEffect(() => {
     if (isPlaying) {
@@ -83,7 +83,7 @@ const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audio
       clearInterval(intervalRef.current);
       audioRef.current.pause();
     }
-  }, [isPlaying]);
+  }, [isPlaying, audioRef, startTimer]);
 
   useEffect(() => {
     // Pause and clean up on unmount
@@ -92,11 +92,11 @@ const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audio
       audioRefCur.pause();
       // clearInterval(intervalRef.current)
     };
-  }, []);
+  }, [audioRef]);
 
   useEffect(() => {
     setTrackIndex(0);
-  }, [tracks]);
+  }, [tracks, setTrackIndex]);
 
   useEffect(() => {
     audioRef.current.pause();
@@ -112,14 +112,14 @@ const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audio
     } else {
       isReady.current = true;
     }
-  }, [trackIndex, tracks]);
+  }, [trackIndex, tracks, audioRef, audioSrc, setIsPlaying]);
 
   const onScrub = useCallback((value: string) => {
     // Clear any timers already running
     clearInterval(intervalRef.current);
     audioRef.current.currentTime = Number(value);
     setTrackProgress(audioRef.current.currentTime);
-  }, []);
+  }, [audioRef]);
 
   const onScrubEnd = useCallback(() => {
     // If not already playing, start
@@ -127,7 +127,7 @@ const AudioPlayer: React.FC<AudioPlayProps> = ({trackIndex, setTrackIndex, audio
       setIsPlaying(true);
     }
     startTimer();
-  }, [startTimer]);
+  }, [startTimer, isPlaying, setIsPlaying]);
 
   return (
     <div className="audio_player">
