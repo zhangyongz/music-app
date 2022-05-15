@@ -6,10 +6,13 @@ import store from "./store";
 import { Provider } from "react-redux";
 import reportWebVitals from "./reportWebVitals";
 import {
-  BrowserRouter,
+  // BrowserRouter,
+  // Router,
   Routes,
   Route,
+  unstable_HistoryRouter as HistoryRouter
 } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import { PrivateRoute } from "@/components/PrivateRoute";
 import Record from "./views/record/Record";
@@ -25,19 +28,21 @@ import Rank from "./views/rank/Rank";
 //   </React.StrictMode>,
 //   );
 
+const history = createBrowserHistory({ window });
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
+      <HistoryRouter basename={process.env.PUBLIC_URL} history={history}>
         <Routes>
           <Route path="/" element={<PrivateRoute component={App} />}>
+            <Route path="" element={<PrivateRoute component={Rank} />} />
             <Route path="record" element={<PrivateRoute component={Record} needAuth={true} path="record" />} />
             <Route path="collection" element={<PrivateRoute component={Collection} needAuth={true} path="collection" />} />
             <Route path="play-list" element={<PrivateRoute component={PlayList} />} />
-            <Route path="rank" element={<PrivateRoute component={Rank} />} />
           </Route>
         </Routes>
-      </BrowserRouter>
+      </HistoryRouter>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")

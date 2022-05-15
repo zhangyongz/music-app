@@ -50,7 +50,7 @@ const LoginModal: React.FC<Props> = ({visible, setVisible}) => {
   return (
     <Modal title="登录" visible={visible} onOk={handleOk} onCancel={handleCancel}
       transitionName="" maskTransitionName="">
-      <Input placeholder="网易云用户id" value={inputValue} onChange={inputChange} />
+      <Input placeholder="网易云音乐用户id" value={inputValue} onChange={inputChange} />
       {/* <Button type="primary" onClick={sureHandle} style={{margin: '10px auto'}}>
           确定
         </Button> */}

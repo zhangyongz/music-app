@@ -21,6 +21,12 @@ module.exports = {
     alias: {
       "@": resolve("src")
     },
-    // extensions: ["tsx"]
+    configure: (webpackConfig, {env}) => {
+      webpackConfig.output = {
+        ...webpackConfig.output,
+        publicPath: env === "production" ? "/music-app": "/"
+      };
+      return webpackConfig;
+    }
   }
 };

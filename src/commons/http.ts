@@ -5,7 +5,7 @@ const instance = axios.create();
 
 instance.defaults.withCredentials = true;
 
-instance.defaults.baseURL = "http://localhost:3002";
+instance.defaults.baseURL = "//music.zhangayong.com";
 
 const sucessCode = [200, 801, 802, 803];
 

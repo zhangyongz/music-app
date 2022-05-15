@@ -28,6 +28,6 @@ export const PrivateRoute: React.FC<Props> = ({
   if (uid || !needAuth) {
     return <RouteComponent />;
   } else {
-    return <Navigate to={`/rank?path=${path}`} replace={true} />;
+    return <Navigate to={`/?path=${path}`} replace={true} />;
   }
 };

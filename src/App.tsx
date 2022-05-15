@@ -49,7 +49,7 @@ const AudioMenu: React.FC = () => {
       }
       <ul className="menu_list">
         <li className="list_item">
-          <NavLink to="rank"
+          <NavLink to="/"
             className={({ isActive }) =>
               isActive ? "active link" : "link"
             }>
