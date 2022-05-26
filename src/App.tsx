@@ -20,7 +20,7 @@ import { audioSrcPrefix } from "@/commons/const";
 
 import LoginModal from "@/components/login-modal/LoginModal";
 
-const AudioMenu: React.FC = () => {
+const AudioMenuComponent: React.FC = () => {
   const profile = useAppSelector(selectProfile);
 
   const dispatch = useAppDispatch();
@@ -81,6 +81,8 @@ const AudioMenu: React.FC = () => {
     </div >
   );
 };
+
+const AudioMenu = React.memo(AudioMenuComponent);
 
 const App: React.FC = () => {
   // loading
